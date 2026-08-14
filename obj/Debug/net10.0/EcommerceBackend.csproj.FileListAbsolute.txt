@@ -132,3 +132,4 @@
 /Users/taher/Documents/dotNet/EcommerceBackend/obj/Debug/net10.0/EcommerceBackend.pdb
 /Users/taher/Documents/dotNet/EcommerceBackend/obj/Debug/net10.0/EcommerceBackend.genruntimeconfig.cache
 /Users/taher/Documents/dotNet/EcommerceBackend/obj/Debug/net10.0/ref/EcommerceBackend.dll
+/Users/taher/Documents/dotNet/EcommerceBackend/obj/Debug/net10.0/EcommerceBackend.sourcelink.json
