@@ -329,4 +329,56 @@ public class ProductService : IProductService
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<ApiResponse<List<ProductDto>>> GetByCategoryAsync(
+    Guid categoryId)
+    {
+        var categoryExists = await _context.Categories
+            .AnyAsync(x =>
+                x.Id == categoryId &&
+                x.IsActive);
+
+        if (!categoryExists)
+        {
+            return ApiResponse<List<ProductDto>>
+                .FailureResponse("Category not found.");
+        }
+
+        var products = await _context.Products
+            .AsNoTracking()
+            .Where(x =>
+                x.CategoryId == categoryId &&
+                x.IsActive &&
+                x.Category.IsActive)
+            .OrderByDescending(x => x.CreatedAt)
+            .Select(x => new ProductDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                Price = x.Price,
+                DiscountPrice = x.DiscountPrice,
+                StockQuantity = x.StockQuantity,
+                SKU = x.SKU,
+                IsActive = x.IsActive,
+
+                CategoryId = x.CategoryId,
+                CategoryName = x.Category.Name,
+
+                Images = x.Images
+                    .Select(i => new ProductImageDto
+                    {
+                        Id = i.Id,
+                        ImageUrl = i.ImageUrl
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
+
+        return ApiResponse<List<ProductDto>>
+            .SuccessResponse(
+                products,
+                "Products fetched successfully."
+            );
+    }
 }

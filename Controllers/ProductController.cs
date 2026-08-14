@@ -24,6 +24,19 @@ public class ProductController : ControllerBase
         return Ok(response);
     }
 
+
+    [HttpGet("category/{categoryId:guid}")]
+    public async Task<IActionResult> GetByCategory(Guid categoryId)
+    {
+        var response =
+            await _productService.GetByCategoryAsync(categoryId);
+
+        if (!response.Success)
+            return NotFound(response);
+
+        return Ok(response);
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
