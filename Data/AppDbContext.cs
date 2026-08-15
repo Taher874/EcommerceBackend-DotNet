@@ -387,6 +387,9 @@ public class AppDbContext : DbContext
                 .HasForeignKey<Payment>(x => x.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            entity.Property(x => x.ProviderOrderId)
+.HasMaxLength(255);
+
             entity.HasIndex(x => x.TransactionId)
                 .IsUnique()
                 .HasFilter("\"TransactionId\" IS NOT NULL");

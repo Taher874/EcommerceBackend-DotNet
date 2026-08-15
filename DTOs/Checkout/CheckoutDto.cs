@@ -1,8 +1,8 @@
-namespace EcommerceBackend.DTOs.Order;
+namespace EcommerceBackend.DTOs.Checkout;
 
-public class OrderDto
+public class CheckoutDto
 {
-    public Guid Id { get; set; }
+    public Guid OrderId { get; set; }
 
     public string OrderNumber { get; set; } = string.Empty;
 
@@ -14,11 +14,9 @@ public class OrderDto
 
     public decimal TotalAmount { get; set; }
 
-    public string Status { get; set; } = string.Empty;
+    public string OrderStatus { get; set; } = string.Empty;
 
     public string PaymentStatus { get; set; } = string.Empty;
 
-    public DateTime CreatedAt { get; set; }
-
-    public List<OrderItemDto> Items { get; set; } = new();
+    public string? PaymentUrl { get; set; }
 }

@@ -6,11 +6,20 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using EcommerceBackend.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<PayPalSettings>(
+    builder.Configuration.GetSection("PayPal")
+);
+
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddHttpClient<IPayPalService, PayPalService>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+builder.Services.AddHttpClient<IPayPalService, PayPalService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -65,8 +74,12 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

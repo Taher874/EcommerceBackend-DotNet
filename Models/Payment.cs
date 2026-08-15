@@ -12,6 +12,8 @@ public class Payment
 
     public string? TransactionId { get; set; }
 
+    public string? ProviderOrderId { get; set; }
+
     public string? PaymentReference { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
